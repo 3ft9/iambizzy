@@ -1,0 +1,9 @@
+{% load static %}
+<fieldset class="mt-3"><legend class="form-label">Block labels (optional)</legend>
+<p class="form-hint">Anyone who can read a block’s title can see its label. Leave it blank for Busy.</p>
+{% for field in labels %}<div class="mt-2" data-label-editor {% if field.name == 'reverse_identifier' %}data-reverse-label{% endif %}>
+<label class="form-label" for="{{ field.id_for_label }}">{% if field.name == 'forward_identifier' %}Label on {{ rule.destination.name|default:"destination calendar" }}{% else %}Return label on {{ rule.source.name|default:"source calendar" }} (two-way only){% endif %}</label>
+{{ field }}{{ field.errors }}
+<small>Preview: <output for="{{ field.id_for_label }}">Busy{% if field.value %} ({{ field.value }}){% endif %}</output></small>
+</div>{% endfor %}</fieldset>
+<script src="{% static 'block-label.js' %}" defer></script>

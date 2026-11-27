@@ -1,0 +1,91 @@
+:root {
+  --ink: #183e34;
+  --green: #20674e;
+  --muted: #52685f;
+  --line: #d6e1d8;
+  --tblr-body-font-family: "Inter", system-ui, sans-serif;
+}
+body {background: #f4f6f1; color: var(--ink);}
+.wrap {max-width: 72rem; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 3rem);}
+.mast {background: #163c32; color: white;}
+.mast-inner, .mast nav, .wordmark, .heading, .actions, .provider-title, .calendar-row, .schedule {display: flex; align-items: center;}
+.mast-inner {gap: clamp(1rem, 6vw, 5rem); min-height: 4.5rem;}
+.wordmark {color: #fafbf3; font-size: 1.45rem; font-weight: 700; letter-spacing: -.06em; gap: .4rem;}
+.wordmark:hover, .mast nav a:hover {color: white; text-decoration: none;}
+.mast nav {align-self: stretch; gap: 1.25rem;}
+.mast nav a {align-content: center; color: #c1d6c9; border-block: 3px solid transparent; font-weight: 550;}
+.mast nav a[aria-current] {color: white; border-bottom-color: #b3dfa7;}
+.workspace {padding-top: clamp(2rem, 5vw, 4.25rem); padding-bottom: 5rem;}
+.heading {justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.6rem;}
+h1 {font-size: clamp(2.15rem, 5vw, 3.25rem); line-height: 1.05; letter-spacing: -.055em; margin: 0;}
+h2, h3 {letter-spacing: -.025em; color: var(--ink);}
+h2 {font-size: 1.45rem;}
+.card {border: 1px solid var(--line); border-radius: .85rem; box-shadow: 0 2px 5px #193c3010;}
+.card-body {padding: clamp(1.2rem, 3vw, 2rem);}
+.btn.primary {background: var(--green); border-color: var(--green); color: white;}
+.btn.primary:hover {background: #124b39;}
+.btn {white-space: normal;}
+.btn:focus-visible, summary:focus-visible, a:focus-visible {outline: 3px solid #b9831b; outline-offset: 3px;}
+.welcome {display: grid; grid-template-columns: 3fr 2fr; overflow: hidden; background: #fff;}
+.welcome-copy {padding: clamp(1.65rem, 5vw, 3.75rem); align-self: center;}
+.welcome h2 {font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.1; margin-bottom: .85rem;}
+.welcome p {max-width: 26rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.4rem;}
+.calendar-art {position: relative; overflow: hidden; min-height: 13rem; background: #deecdc; background-image: radial-gradient(#abc5aa 1px, transparent 1px); background-size: 14px 14px;}
+.mini {position: absolute; left: 50%; top: 50%; width: 8.5rem; height: 6.75rem; border: 1px solid #a3beac; border-radius: .65rem; box-shadow: 0 8px 20px #254f3420; background: repeating-linear-gradient(to bottom,#fcfff8 0 15px,#e3ebe0 15px 16px);}
+.mini::before {content: ""; display: block; height: 1.6rem; border-radius: .6rem .6rem 0 0; background: #396b51;}
+.mini.back {transform: translate(-85%,-67%) rotate(-10deg);}
+.mini.front {transform: translate(-20%,-32%) rotate(8deg);}
+.mini.front::before {background: #96b789;}
+.mini i,.mini b {position: absolute; height: .65rem; left: 20%; width: 45%; top: 40%; border-radius: .18rem; background: #9ccdb5;}
+.mini b {left: 48%; width: 32%; top: 65%; background: #dbc58b;}
+.schedule {gap: 1.4rem; flex-wrap: wrap; margin-top: 1.2rem; color: var(--muted); font-size: .86rem;}
+.schedule strong {color: var(--ink); margin-left: .3rem;}
+.rule-grid {display: grid; grid-template-columns: minmax(12rem, 1.5fr) 1fr 1.2fr auto; gap: 1rem; align-items: center; padding: 1.25rem;}
+.column-head {background: #e8efe7; border-radius: .85rem .85rem 0 0; color: var(--muted); font-size: .8rem; padding-block: .7rem; grid-template-columns: minmax(12rem, 1.5fr) 1fr 1.2fr 7.25rem;}
+.rule {border-top: 1px solid var(--line); grid-template-columns: minmax(12rem, 1.5fr) 1fr 1.2fr 7.25rem;}
+.pair h2,.calendar-name h2,.provider-title h3 {font-size: 1.02rem; line-height: 1.4; margin: 0;}
+small,.last-sync,.form-hint {color: var(--muted);}
+.pair,.calendar-name,.issue {overflow-wrap: anywhere;}
+.arrow {color: var(--green);}
+.state {display: inline-flex; align-items: center; border-radius: 2rem; padding: .2rem .6rem; background: #edf0ed; color: #475d54; font-size: .8rem; font-weight: 600;}
+.healthy {background: #e3f2df; color: #226239;}
+.problem,.issue {background: #fff0da; color: #784211;}
+.issue {grid-column: 1/-1; margin: 0; padding: .6rem .8rem; border-radius: .4rem;}
+.actions {gap: .35rem; justify-content: flex-end;}
+.more {position: relative;}
+.more summary {cursor: pointer;}
+.more > summary {list-style: none; min-width: 2rem;}
+.more > summary::-webkit-details-marker {display: none;}
+.action-panel {position: absolute; right: 0; top: calc(100% + .3rem); z-index: 3; width: max-content; max-width: 16rem; padding: .9rem; border: 1px solid var(--line); border-radius: .6rem; background: white; box-shadow: 0 5px 18px #143b3425;}
+.action-panel details {margin-top: .5rem;}
+.action-panel .btn + .btn {margin-top: .5rem;}
+.section-heading {margin-bottom: 1rem;}
+.provider-grid {display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start;}
+.provider-title {gap: .8rem; margin-bottom: 1.25rem;}
+.provider-mark {display: grid; place-items: center; flex: none; width: 2.5rem; height: 2.5rem; border-radius: .6rem; background: #e8f0fa; color: #315a8b; font-weight: 700;}
+.provider-mark.feed {background: #f6ebd6; color: #795b1d; font-size: .8rem;}
+.calendar-row {padding: 1rem 1.25rem; gap: .9rem;}
+.calendar-row + .calendar-row {border-top: 1px solid var(--line);}
+.calendar-name {flex: 1;}
+.setup {max-width: 42rem;}
+.back-link {display: inline-block; margin-bottom: 1rem; color: var(--green);}
+.mobile-label {display: none;}
+.skip:focus {position: absolute; top: .5rem; left: .5rem; z-index: 5; background: white; padding: .5rem;}
+@media (max-width: 800px) {
+  .column-head {display: none;}
+  .rule {grid-template-columns: minmax(0, 1fr) auto; gap: .65rem; border-top: 0;}
+  .rule + .rule {border-top: 1px solid var(--line);}
+  .last-sync {font-size: .85rem;}
+  .mobile-label {display: block;}
+}
+@media (max-width: 600px) {
+  .welcome,.provider-grid {grid-template-columns: 1fr;}
+  .calendar-art {min-height: 8rem; grid-row: 1;}
+  .mini {scale: .78; transform-origin: top left;}
+  .mast-inner {min-height: 3.75rem; justify-content: space-between; gap: .5rem;}
+  .mast nav {gap: .8rem;}
+  .wordmark {font-size: 1.2rem;}
+  .wordmark img {width: 24px; height: 24px;}
+}
+.alert-success {color: #225b3c; background: #edf6e9; border-color: #c8dcc4;}
+.welcome .btn {gap: .5rem;}

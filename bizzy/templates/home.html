@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="heading"><h1>Connections</h1>
+{% if rules and ready %}<a href="{% url 'new_connection' %}" class="btn primary">Create a connection</a>{% endif %}</div>
+{% if rules %}
+<div class="card">
+<div class="rule-grid column-head" aria-hidden="true"><span>Calendar pair</span><span>Status</span><span>Last successful sync</span><span></span></div>
+{% for rule in rules %}
+<article class="rule-grid rule">
+<div class="pair"><h2>{{ rule.source.name }} <span class="arrow" aria-label="{% if rule.bidirectional %}both directions{% else %}to{% endif %}">{% if rule.bidirectional %}⇄{% else %}→{% endif %}</span> {{ rule.destination.name }}</h2>
+<small>{% if rule.bidirectional %}Two-way{% else %}One-way{% endif %} sync</small></div>
+<div><span class="state {% if rule.error %}problem{% elif rule.status == 'active' and rule.last_success %}healthy{% endif %}">
+{% if rule.error %}Needs attention{% elif rule.status == 'active' %}{% if rule.last_success %}Active{% else %}Pending{% endif %}{% elif rule.status == 'cleanup' or rule.status == 'forget' %}Removing{% else %}Paused{% endif %}</span></div>
+<div class="last-sync"><small class="mobile-label">Last successful sync</small>{% if rule.last_success %}<time datetime="{{ rule.last_success|date:'c' }}">{{ rule.last_success|date:"j M Y, H:i" }} UTC</time>{% else %}Awaiting first sync{% endif %}</div>
+<form class="actions" method="post" action="{% url 'action' rule.pk %}">{% csrf_token %}
+{% if rule.status == 'active' %}<button class="btn btn-sm text-nowrap" name="action" value="sync">Sync now</button>{% elif rule.status == 'paused' %}<button class="btn btn-sm" name="action" value="resume">Resume</button>{% elif rule.status == 'cleanup' %}<button class="btn btn-sm" name="action" value="sync">Retry cleanup</button><button class="btn btn-sm" name="action" value="forget">Remove and keep blocks</button>{% endif %}
+{% if rule.status == 'active' or rule.status == 'paused' %}<a class="btn btn-sm" href="{% url 'edit_connection' rule.pk %}" aria-label="Edit connection between {{ rule.source.name }} and {{ rule.destination.name }}">Edit</a>{% endif %}</form>
+{% if rule.error %}<p class="issue">{{ rule.error }}</p>{% endif %}
+</article>{% endfor %}</div>
+{% else %}
+<section class="welcome card"><div class="welcome-copy">
+{% if ready %}<h2>Create a connection</h2><p>Choose which calendar supplies appointments and where their busy blocks should appear.</p><a class="btn primary" href="{% url 'new_connection' %}">Create a connection <span aria-hidden="true">→</span></a>
+{% else %}<h2>{% if not calendars %}Connect your first calendar{% elif not destinations %}Add a writable destination{% else %}Connect a second calendar{% endif %}</h2>
+<p>{% if not calendars %}Connect Google Calendar or an ICS feed to start syncing busy time between calendars.{% elif not destinations %}Connect a Google calendar with read/write access to receive busy blocks.{% else %}Add another Google calendar or an ICS feed to use as a source.{% endif %}</p>
+<a class="btn primary" href="{% url 'calendars' %}#connect">Connect a calendar <span aria-hidden="true">→</span></a>{% endif %}
+</div><div class="calendar-art" aria-hidden="true"><div class="mini back"><i></i><b></b></div><div class="mini front"><i></i><b></b></div></div></section>
+{% endif %}
+<div class="schedule"><span>Poll interval <strong>{{ interval }}</strong></span><span>Look-ahead <strong>{{ months }} month{{ months|pluralize }}</strong></span></div>
+{% endblock %}

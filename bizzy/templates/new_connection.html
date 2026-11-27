@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}New connection{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'home' %}">← Connections</a>
+<div class="heading"><h1>New connection</h1></div>
+<section class="card card-body setup">
+{% if ready %}
+{% if error %}<div class="alert alert-warning" role="alert">{{ error }}</div>{% endif %}
+<form method="post" action="{% url 'add_rule' %}" id="connection">{% csrf_token %}
+<label class="form-label" for="source">Source calendar</label>
+<select class="form-select" name="source" id="source" required><option value="">Choose a source</option>{% for c in calendars %}<option value="{{ c.pk }}" data-writable="{{ c.writable|yesno:'yes,no' }}">{{ c.name }} · {{ c.provider|upper }}</option>{% endfor %}</select>
+<label class="form-label mt-3" for="destination">Destination calendar</label>
+<select class="form-select" name="destination" id="destination" required><option value="">Choose a destination</option>{% for c in destinations %}<option value="{{ c.pk }}">{{ c.name }} · {{ c.provider|upper }}</option>{% endfor %}</select>
+<p class="form-hint">The destination must be a different calendar with read/write access. <a href="{% url 'calendars' %}#connect">Connect a calendar</a></p>
+<label class="form-label mt-3" for="direction">Direction</label>
+<select name="direction" class="form-select" id="direction"><option value="one">One-way · source to destination</option><option value="both">Two-way · both directions</option></select>
+<p class="form-hint" id="permission-hint">Two-way sync requires write access on both calendars.</p>
+{% include "label_fields.html" %}
+<button class="btn primary mt-3">Create connection</button></form>
+<script src="{% static 'connection.js' %}" defer></script>
+{% else %}<h2>Connect calendars first</h2><p>Choose two distinct calendars, including a Google destination with read/write access.</p><div><a class="btn primary" href="{% url 'calendars' %}#connect">Connect a calendar</a></div>{% endif %}
+</section>{% endblock %}

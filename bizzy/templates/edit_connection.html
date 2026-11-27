@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Edit connection{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'home' %}">← Connections</a>
+<div class="heading"><h1>Edit connection</h1></div>
+<section class="card card-body setup"><h2>{{ rule.source.name }} {% if rule.bidirectional %}⇄{% else %}→{% endif %} {{ rule.destination.name }}</h2>
+<form method="post">{% csrf_token %}
+{% include "label_fields.html" %}
+<button class="btn primary mt-3">Save block titles</button></form></section>
+<section class="card card-body setup mt-3">
+<h2>Sync schedule</h2>
+<form method="post" action="{% url 'action' rule.pk %}">{% csrf_token %}
+{% if rule.status == 'active' %}
+<p>Pause automatic sync and keep existing busy blocks.</p>
+<button class="btn" name="action" value="pause">Pause connection</button>
+{% else %}
+<p>This connection is paused. Resuming queues a sync.</p>
+<button class="btn" name="action" value="resume">Resume connection</button>
+{% endif %}
+</form></section>
+<section class="card card-body setup mt-3">
+<h2>Remove connection</h2>
+<p>Choose what happens to ongoing and future busy blocks. Finished blocks stay on the calendar.</p>
+<form class="d-flex flex-wrap gap-2" method="post" action="{% url 'action' rule.pk %}">{% csrf_token %}
+<button class="btn btn-outline-danger" name="action" value="cleanup">Remove connection and blocks</button>
+<button class="btn btn-outline-danger" name="action" value="forget">Remove connection and keep blocks</button>
+</form></section>
+{% endblock %}

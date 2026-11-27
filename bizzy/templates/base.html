@@ -1,0 +1,19 @@
+{% load static %}<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Connections{% endblock %} · iAmBizzy</title>
+<link rel="icon" href="{% url 'favicon' %}">
+<link rel="stylesheet" href="{% static 'vendor/tabler/tabler.min.css' %}">
+<link rel="stylesheet" href="{% static 'dashboard.css' %}">
+</head><body>
+<a class="visually-hidden-focusable skip" href="#main">Skip to content</a>
+<header class="mast"><div class="wrap mast-inner">
+<a class="wordmark" href="{% url 'home' %}"><img src="{% url 'favicon' %}" width="32" height="32" alt="">iAmBizzy</a>
+<nav aria-label="Main navigation"><a href="{% url 'home' %}" {% if page == 'connections' %}aria-current="page"{% endif %}>Connections</a><a href="{% url 'calendars' %}" {% if page == 'calendars' %}aria-current="page"{% endif %}>Calendars</a></nav>
+</div></header>
+<main id="main" class="wrap workspace">
+{% for message in messages %}<div class="alert alert-success" role="status">{{ message }}</div>{% endfor %}
+{% block content %}{% endblock %}
+</main>
+</body></html>

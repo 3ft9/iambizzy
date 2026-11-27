@@ -1,0 +1,13 @@
+services:
+  iambizzy:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    ports:
+      - "127.0.0.1:${PORT:-8080}:${PORT:-8080}"
+    volumes:
+      - calendar-data:/data
+volumes:
+  calendar-data:
