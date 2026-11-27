@@ -48,7 +48,9 @@ jobs:
         run: |
           docker run --name bizzy-smoke -d -e PORT=8091 -p 127.0.0.1:8091:8091 iambizzy:ci
           trap 'docker logs bizzy-smoke && docker rm -f bizzy-smoke' EXIT
-          curl --fail --retry 15 --retry-connrefused --retry-delay 1 http://localhost:8091/ -o /tmp/dashboard.html
+          # Until the app listens, Docker's port proxy resets connections.
+          curl --fail --retry 30 --retry-all-errors --retry-delay 1 http://localhost:8091/healthz
+          curl --fail http://localhost:8091/ -o /tmp/dashboard.html
           grep -q 'Connect your first calendar' /tmp/dashboard.html
           curl --fail --silent --output /dev/null http://localhost:8091/static/vendor/tabler/tabler.min.css
       - uses: docker/login-action@v3

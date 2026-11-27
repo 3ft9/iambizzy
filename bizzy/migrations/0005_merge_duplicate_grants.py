@@ -1,4 +1,4 @@
-from django.db import migrations, models
+from django.db import migrations
 
 
 def merge_duplicate_grants(apps, schema_editor):
@@ -21,11 +21,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        # Alone in this migration: PostgreSQL cannot alter a table in the transaction that
+        # changed its rows.
         migrations.RunPython(merge_duplicate_grants, migrations.RunPython.noop),
-        migrations.RemoveConstraint(model_name="account", name="one_google_grant_per_mode"),
-        migrations.AlterField(
-            model_name="account",
-            name="identity",
-            field=models.CharField(max_length=512, unique=True),
-        ),
     ]
