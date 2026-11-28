@@ -68,3 +68,14 @@ Run **one application replica per database**. It serves HTTP, applies migrations
 Back up the database **and the same encryption key**. Google refresh tokens and ICS URLs are encrypted in the database. A new key cannot decrypt existing credentials. Stop the instance before copying a SQLite volume. For PostgreSQL use a consistent database backup and save the key separately. Restore both before starting a replacement instance. Keep the data volume across upgrades and take a backup before applying migrations.
 
 See the [developer guide](docs/development.md) for local setup, tests, architecture and extension points. Released under the [MIT License](LICENSE).
+
+## Blue sky
+
+Ideas that are not planned.
+
+- **Hosted service.** A Google Workspace can restrict which OAuth apps its
+  users may connect, and an admin then has to trust each self-hosted
+  install's client ID separately. One hosted iAmBizzy would have a single
+  client ID that an admin trusts once, for everyone there. It would need
+  user accounts and per-user data in place of the single-operator model,
+  Google's OAuth verification for the calendar scopes, and billing.
