@@ -2,7 +2,7 @@
 name = "iambizzy"
 version = "0.1.0"
 description = "Keep availability in sync across calendars"
-requires-python = ">=3.12,<3.15"
+requires-python = ">=3.12,<3.16"
 license = "MIT"
 dependencies = [
   "Django>=5.2.8,<5.3",
